@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejer2</title>
+</head>
+<body>
+    <form id="formulario">
+        <div>
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" required>
+            <span id="errorEmail" style="color: red; display: none;">El formato debe ser xxxx@yyyy.zzzz</span>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <span id="errorPassword" style="color: red; display: none;">Debe tener entre 8 y 10 caracteres</span>
+        </div>
+        <div>
+            <button type="submit" id="submit" disabled>Enviar</button>
+        </div>
+    </form>
+
+    <script src="ejer2.js"></script>
+</body>
+</html>
