@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Práctica 2 - Usuarios</title>
+</head>
+<body>
+    <h1>Práctica 2: Operaciones con APIs</h1>
+    <form id="user-form">
+        <label for="delay">Retraso en segundos:</label>
+        <input type="number" id="delay" min="0" required>
+        <br><br>
+        <label for="user-id">Número de usuario (1-12):</label>
+        <input type="number" id="user-id" min="1" max="12" required>
+        <br><br>
+        <button type="button" onclick="procesarUsuario()">Enviar</button>
+    </form>
+
+    <h2>Resultado</h2>
+    <p><strong>ID:</strong> <span id="user-id-result"></span></p>
+    <p><strong>Email:</strong> <span id="email-result"></span></p>
+    <p><strong>Nombre:</strong> <span id="name-result"></span></p>
+    <p><strong>Status:</strong> <span id="status-result"></span></p>
+
+    <script>
+        // Función principal para procesar el usuario
+        async function procesarUsuario() {
+            const delay = document.getElementById("delay").value;
+            const userId = document.getElementById("user-id").value;
+
+            try {
+                // Llamada GET a la API para obtener un usuario
+                const userResponse = await fetch(`https://reqres.in/api/users/${userId}?delay=${delay}`);
+                
+                // Verificamos si la respuesta es válida
+                if (!userResponse.ok) {
+                    throw new Error(userResponse.status);
+                }
+
+                const userData = await userResponse.json();
+                const user = userData.data;
+
+                // Mostramos los resultados de la primera llamada
+                document.getElementById("user-id-result").textContent = user.id;
+                document.getElementById("email-result").textContent = user.email;
+
+                // Llamada POST para enviar los datos del usuario
+                const postResponse = await fetch("https://httpbin.org/post", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(user)
+                });
+
+                const postData = await postResponse.json();
+
+                // Mostramos los resultados de la segunda llamada
+                document.getElementById("name-result").textContent = postData.json.first_name;
+                document.getElementById("status-result").textContent = postResponse.status;
+
+            } catch (error) {
+                // Manejamos errores en cualquier parte del proceso
+                document.getElementById("status-result").textContent = error.message;
+                console.error("Error procesando usuario:", error);
+            }
+        }
+    </script>
+</body>
+</html>

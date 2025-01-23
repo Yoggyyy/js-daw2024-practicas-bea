@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Práctica 1 - Datos Aleatorios</title>
+</head>
+<body>
+    <h1>Práctica 1: Datos Aleatorios de Usuario</h1>
+    <div id="user-data">
+        <p><strong>Nombre:</strong> <span id="name"></span></p>
+        <p><strong>Apellido:</strong> <span id="surname"></span></p>
+        <p><strong>Email:</strong> <span id="email"></span></p>
+        <p><strong>Dirección:</strong> <span id="address"></span></p>
+        <p><strong>País:</strong> <span id="country"></span></p>
+    </div>
+
+    <script>
+        // URL base para obtener datos de usuario desde la API Faker
+        const url = "https://fakerapi.it/api/v2/persons?_quantity=1";
+
+        // Función para obtener y mostrar datos de un usuario
+        function obtenerUsuario() {
+            // Usamos fetch para realizar una petición GET
+            fetch(url)
+                .then(response => {
+                    // Verificamos si la respuesta es exitosa
+                    if (!response.ok) {
+                        throw new Error(`Error HTTP: ${response.status}`);
+                    }
+                    return response.json(); // Convertimos la respuesta a JSON
+                })
+                .then(data => {
+                    // Extraemos el primer usuario del array "data"
+                    const usuario = data.data[0];
+
+                    // Mostramos los datos del usuario en la página
+                    document.getElementById("name").textContent = usuario.firstname;
+                    document.getElementById("surname").textContent = usuario.lastname;
+                    document.getElementById("email").textContent = usuario.email;
+                    document.getElementById("address").textContent = usuario.address;
+                    document.getElementById("country").textContent = usuario.country;
+                })
+                .catch(error => {
+                    // Manejamos errores en la petición
+                    console.error("Error al obtener los datos:", error);
+                });
+        }
+
+        // Llamamos a la función para obtener datos al cargar la página
+        obtenerUsuario();
+    </script>
+</body>
+</html>
