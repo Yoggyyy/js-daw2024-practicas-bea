@@ -1,0 +1,48 @@
+/* Para centrar el contenedor en pantalla (opcional) */
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black; /* Color de fondo */
+  }
+  
+  /* Contenedor del spinner y el texto */
+  .loading-container {
+    position: relative;  /* necesario para posicionar elementos absolutos dentro */
+    width: 80px;         /* mismo ancho y alto para el spinner */
+    height: 80px;
+    display: flex;       /* para centrar el texto si queremos */
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* El spinner (círculo que gira) */
+  .spinner {
+    position: absolute;            /* se sitúa detrás del texto */
+    width: 100%;
+    height: 100%;
+    border: 10px solid #f3f3f3;    /* grosor del círculo */
+    border-top-color: #3498db;     /* color de la parte giratoria */
+    border-radius: 50%;
+    animation: girar 1s linear infinite; /* gira sin parar */
+  }
+  
+  /* Animación del giro */
+  @keyframes girar {
+    0%   { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  /* Texto centrado dentro del contenedor */
+  .loading-text {
+    position: relative; /* se mantiene por encima del spinner */
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: white;
+    pointer-events: none; /* opcional, para que no intercepte clics */
+  }
+  
+  
